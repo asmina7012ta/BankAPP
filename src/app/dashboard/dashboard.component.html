@@ -1,44 +1,92 @@
-<h3 style="color: rgb(9, 78, 55); text-align:center;  ">welcome{{user}}</h3>
+<div class="ms-0 mt-1">
+  <h5>{{sdate | date :'short'}}</h5>
+</div>
+<h3 [ngClass]="acno?'s1':'' " style="color: rgb(9, 78, 55); text-align:center;  ">welcome {{user}}</h3>
 
-<div class="container w-50 mt-2 p-3 " style="text-align:center ; background-color: rgba(67, 86, 86, 0.523); border-radius: 20px; ">
-  <a style="text-decoration: none;color: rgb(23, 80, 76);" routerLink="/transaction" href=""><strong>View transation detalis</strong> </a>
+<div [ngClass]="acno?'s1':'' " class="container w-100 text-end mt-2">
+  <button (click)="logout()" class="btn  mt-3 text-center mb-3" style="background-color: aqua;">LOG OUT</button>
+</div>
+<div class="container w-100 text-center ">
 
-</div> <div class="row">
+  <button (click)="deleteAcc()" class="btn btn-danger  text-center">Delete</button>
+  <app-delete (onDelete)="onDeleteAcc($event)" (onCancel)="cancelChild()" [item]="acno"></app-delete>
+</div>
+
+<div [ngClass]="acno?'s1':'' " class="container w-50 mt-2 p-3 "
+  style="text-align:center ; background-color: rgba(67, 86, 86, 0.523); border-radius: 20px; ">
+  <a style="text-decoration: none;color: rgb(23, 80, 76);" routerLink="/transaction" href=""><strong>View transation
+      detalis</strong> </a>
+
+</div>
+
+<div [ngClass]="acno?'s1':'' " class="row">
   <div class="col-6 p-3">
-    <form class="p-3" style="text-align: center; background-color: rgba(67, 86, 86, 0.523); border-radius: 20px;">
-    <h4 style="color: black;">Deposit</h4>
-    <div class="p-2 mt-2">
-        <input [(ngModel)]="acno" id="d1" name="duser"  style="border: none;" placeholder="Account number" class="form-control" type="text">
-    </div>
-    <div class="p-2 mt-2">
-         <input [(ngModel)]="psw" id="d2" name="dpsw" type="password"  style="border: none;" placeholder="password" class="form-control" type="text">
-        </div>
-    <div class="p-2 mt-2">
-        <input [(ngModel)]="amount" id="d3"name="damt" style="border: none;" placeholder="Deposit Amount" class="form-control" type="text">
-    </div>
-  
-  <button (click)="Deposit()" type="submit" class="btn btn-info mt-4 p-2">Deposite</button>
-  
-  </form>
+    <form [formGroup]="depositForm" class="p-3"
+      style="text-align: center; background-color: rgba(67, 86, 86, 0.523); border-radius: 20px;">
+      <h4 style="color: black;">Deposit</h4>
+      <div class="p-2 mt-2">
+        <input formControlName="acno" id="d1" name="duser" style="border: none;" placeholder="Account number"
+          class="form-control" type="text">
+      </div>
+      <div *ngIf="this.depositForm.get('acno')?.errors && this.depositForm.get('acno')?.touched"
+        class="text-danger mt-1 text-start">
+        <p>invalid data</p>
+      </div>
+      <div class="p-2 mt-2">
+        <input formControlName="psw" id="d2" name="dpsw" type="password" style="border: none;" placeholder="password"
+          class="form-control" type="text">
+      </div>
+      <div *ngIf="this.depositForm.get('psw')?.errors && this.depositForm.get('psw')?.touched"
+        class="text-danger mt-1 text-start">
+        <p>invalid data</p>
+      </div>
+      <div class="p-2 mt-2">
+        <input formControlName="amount" id="d3" name="damt" style="border: none;" placeholder="Deposit Amount"
+          class="form-control" type="text">
+      </div>
+      <div *ngIf="this.depositForm.get('amount')?.errors && this.depositForm.get('amount')?.touched"
+        class="text-danger mt-1 text-start">
+        <p>invalid data</p>
+      </div>
+
+      <button (click)="Deposit()" type="submit" class="btn btn-info mt-4 p-2">Deposite</button>
+
+    </form>
   </div>
 
 
   <div class="col-6 p-3">
-    <form class="p-3" style="text-align: center; background-color: rgba(67, 86, 86, 0.523); border-radius: 20px;">
-    <h4  style="color: black;">Withdraw</h4>
-    <div class="p-2 mt-2">
-        <input id="w1" [(ngModel)]="acno1" name="wuser"  style="border: none;" placeholder="Account number" class="form-control" type="text">
-    </div>
-    <div class="p-2 mt-2">
-         <input id="w2" [(ngModel)]="psw1" name="wpsw" type="password" style="border: none;" placeholder="password" class="form-control" type="text">
-        </div>
-    <div class="p-2 mt-2">
-        <input id="w3" [(ngModel)]="amount1" name="wamt"  style="border: none;" placeholder="withdrawal Amount" class="form-control" type="text">
-    </div>
-  
-  <button (click)="withdraw()" type="submit" class="btn btn-info mt-4 p-2">Withdraw</button>
-  
-  </form>
+    <form [formGroup]="withdrawForm" class="p-3"
+      style="text-align: center; background-color: rgba(67, 86, 86, 0.523); border-radius: 20px;">
+      <h4 style="color: black;">Withdraw</h4>
+      <div class="p-2 mt-2">
+        <input id="w1" formControlName="acno1" name="wuser" style="border: none;" placeholder="Account number"
+          class="form-control" type="text">
+      </div>
+      <div *ngIf="this.withdrawForm.get('acno1')?.errors && this.withdrawForm.get('acno1')?.touched"
+        class="text-danger mt-1 text-start">
+        <p>invalid data</p>
+      </div>
+      <div class="p-2 mt-2">
+        <input id="w2" formControlName="psw1" name="wpsw" type="password" style="border: none;" placeholder="password"
+          class="form-control" type="text">
+      </div>
+      <div *ngIf="this.withdrawForm.get('psw1')?.errors && this.withdrawForm.get('psw1')?.touched"
+        class="text-danger mt-1 text-start">
+        <p>invalid data</p>
+      </div>
+
+      <div class="p-2 mt-2">
+        <input id="w3" formControlName="amount1" name="wamt" style="border: none;" placeholder="withdrawal Amount"
+          class="form-control" type="text">
+      </div>
+      <div *ngIf="this.withdrawForm.get('amount1')?.errors && this.withdrawForm.get('amount1')?.touched"
+        class="text-danger  text-start">
+        <p>invalid data</p>
+      </div>
+      <button (click)="withdraw()" type="submit" class="btn btn-info mt-4 p-2">Withdraw</button>
+
+    </form>
   </div>
 
-</div> 
+</div>

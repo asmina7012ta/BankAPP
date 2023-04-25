@@ -1,13 +1,28 @@
-<div class="mt-3 ps-3" style="color: teal;">  
-  </div>
-  
-  <h1 class="  text-center mt-5" style="color: rgb(26, 91, 91);" >SIGN IN</h1>
-  
-       <form  action=""class="container w-50 border text-center mt-2 " style="border-radius: 10px; background-color: rgba(24, 93, 114, 0.579);">
-      <input   id="ac1" [(ngModel)]="uname"   name="uname" type="text" placeholder="User name" class="form-control mt-5 " >
-      <input id="ac2"  [(ngModel)]="acno"  name="acnum" type="text" placeholder="accont number" class="form-control mt-3 " >
-        <input  id="ac3" [(ngModel)]="psw"  name="password" type="password" placeholder="password" class="form-control mt-3" > 
-        <button (click)="register()"  type="button" class="btn btn-info mt-3 text-center mb-3 ">
-          sign in
-        </button>
-      </form>
+<div class="mt-3 ps-3" style="color: teal;">
+</div>
+
+<h1 class="  text-center mt-5" style="color: rgb(26, 91, 91);">SIGN IN</h1>
+
+<form [formGroup]="registerForm" action="" class="container w-50 border text-center mt-2 "
+    style="border-radius: 10px; background-color: rgba(24, 93, 114, 0.579);">
+    <input id="ac2" formControlName="acno" name="acnum" type="text" placeholder="accont number"
+        class="form-control mt-5 ">
+    <div *ngIf="this.registerForm.get('acno')?.errors && this.registerForm.get('acno')?.touched"
+        class="text-danger mt-1 text-start">
+        <p>include numbers only</p>
+    </div>
+    <input id="ac1" formControlName="uname" name="uname" type="text" placeholder="User name" class="form-control mt-3 ">
+    <div *ngIf="this.registerForm.get('uname')?.errors && this.registerForm.get('uname')?.touched"
+        class="text-danger mt-1 text-start">
+        <p>include charecters only</p>
+    </div>
+    <input id="ac3" formControlName="psw" name="password" type="password" placeholder="password"
+        class="form-control mt-3">
+    <div *ngIf="this.registerForm.get('uname')?.errors && this.registerForm.get('uname')?.touched"
+        class="text-danger mt-1 text-start">
+        <p>include charecters and numbers</p>
+    </div>
+    <button (click)="register()" type="button" class="btn btn-info mt-3 text-center mb-3 ">
+        sign in
+    </button>
+</form>

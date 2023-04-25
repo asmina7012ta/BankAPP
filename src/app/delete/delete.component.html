@@ -1,0 +1,6 @@
+<div *ngIf="item" class="w-25 container p-3 mt-2 text-center border"
+    style="background-color: rgba(6, 111, 111, 0.523); border-radius: 10px;">
+    <h5>Are You Sure,Do You Want To Delete Your Account <strong style="color: rgb(174, 46, 6);">{{item}}</strong> ?</h5>
+    <button type="submit" (click)="delete()" class="btn btn-success">Yes</button>
+    <button type="submit" (click)="cancel()" class="btn btn-danger ms-2">No</button>
+</div>

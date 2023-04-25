@@ -9,9 +9,12 @@ import { DataService } from '../services/data.service';
 export class TransactionComponent {
   transactionArray:any
   constructor(private ds:DataService){
+//ADD transaction data
+    this.ds.getTransaction(JSON.parse(localStorage.getItem('currentAcno') || "")).subscribe((result:any)=>{
+        this.transactionArray=result.transaction
+      })
 
-    this.transactionArray=this.ds.getTransaction(this.ds.currentAcno)
-
+    console.log(this.transactionArray);
     
   }
 
